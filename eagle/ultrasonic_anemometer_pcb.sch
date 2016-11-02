@@ -17573,7 +17573,7 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <part name="P+2" library="supply1" deviceset="VCC" device="" value="+5V"/>
 <part name="GND3" library="supply1" deviceset="GND" device="" value="DGND"/>
 <part name="P+3" library="supply1" deviceset="VCC" device="" value="+5V"/>
-<part name="PROGRAMATOR" library="jumper" deviceset="JP5Q" device=""/>
+<part name="PROGRAMMER" library="jumper" deviceset="JP5Q" device=""/>
 <part name="GND4" library="supply1" deviceset="GND" device="" value="DGND"/>
 <part name="Q1" library="crystal" deviceset="CRYSTAL" device="HC49S" value="25Mhz"/>
 <part name="C5" library="rcl" deviceset="C-EU" device="050-024X044" value="22pF"/>
@@ -17771,7 +17771,7 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <instance part="P+3" gate="VCC" x="-48.26" y="15.24" smashed="yes">
 <attribute name="VALUE" x="-45.72" y="15.24" size="1.778" layer="96"/>
 </instance>
-<instance part="PROGRAMATOR" gate="B" x="53.34" y="-116.84" smashed="yes" rot="R270">
+<instance part="PROGRAMMER" gate="B" x="53.34" y="-116.84" smashed="yes" rot="R270">
 <attribute name="VALUE" x="48.26" y="-126.365" size="1.778" layer="96"/>
 </instance>
 <instance part="GND4" gate="1" x="40.64" y="-124.46"/>
@@ -18359,14 +18359,14 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <wire x1="-58.42" y1="-2.54" x2="-58.42" y2="0" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="PROGRAMATOR" gate="B" pin="1"/>
+<pinref part="PROGRAMMER" gate="B" pin="1"/>
 <wire x1="45.72" y1="-111.76" x2="43.18" y2="-111.76" width="0.1524" layer="91"/>
-<pinref part="PROGRAMATOR" gate="B" pin="7"/>
+<pinref part="PROGRAMMER" gate="B" pin="7"/>
 <wire x1="45.72" y1="-119.38" x2="43.18" y2="-119.38" width="0.1524" layer="91"/>
 <wire x1="43.18" y1="-119.38" x2="43.18" y2="-116.84" width="0.1524" layer="91"/>
-<pinref part="PROGRAMATOR" gate="B" pin="5"/>
+<pinref part="PROGRAMMER" gate="B" pin="5"/>
 <wire x1="43.18" y1="-116.84" x2="45.72" y2="-116.84" width="0.1524" layer="91"/>
-<pinref part="PROGRAMATOR" gate="B" pin="3"/>
+<pinref part="PROGRAMMER" gate="B" pin="3"/>
 <wire x1="45.72" y1="-114.3" x2="43.18" y2="-114.3" width="0.1524" layer="91"/>
 <wire x1="43.18" y1="-114.3" x2="43.18" y2="-116.84" width="0.1524" layer="91"/>
 <junction x="43.18" y="-116.84"/>
@@ -18773,7 +18773,7 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <label x="-38.1" y="38.1" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="PROGRAMATOR" gate="B" pin="6"/>
+<pinref part="PROGRAMMER" gate="B" pin="6"/>
 <wire x1="60.96" y1="-116.84" x2="63.5" y2="-116.84" width="0.1524" layer="91"/>
 <label x="63.5" y="-116.84" size="1.27" layer="95" xref="yes"/>
 </segment>
@@ -18785,7 +18785,7 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <label x="17.78" y="2.54" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="PROGRAMATOR" gate="B" pin="10"/>
+<pinref part="PROGRAMMER" gate="B" pin="10"/>
 <wire x1="60.96" y1="-121.92" x2="63.5" y2="-121.92" width="0.1524" layer="91"/>
 <label x="63.5" y="-121.92" size="1.27" layer="95" xref="yes"/>
 </segment>
@@ -18797,7 +18797,7 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <label x="134.62" y="-63.5" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="PROGRAMATOR" gate="B" pin="2"/>
+<pinref part="PROGRAMMER" gate="B" pin="2"/>
 <wire x1="60.96" y1="-111.76" x2="63.5" y2="-111.76" width="0.1524" layer="91"/>
 <label x="63.5" y="-111.76" size="1.27" layer="95" xref="yes"/>
 </segment>
@@ -18814,7 +18814,7 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <label x="17.78" y="-2.54" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="PROGRAMATOR" gate="B" pin="4"/>
+<pinref part="PROGRAMMER" gate="B" pin="4"/>
 <wire x1="60.96" y1="-114.3" x2="63.5" y2="-114.3" width="0.1524" layer="91"/>
 <label x="63.5" y="-114.3" size="1.27" layer="95" xref="yes"/>
 </segment>

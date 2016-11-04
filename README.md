@@ -1,7 +1,7 @@
 # Ultrasonic Anemometer
 
 <div align="center"><img src="img/outside_1.jpg" width="480"/></div>  
-This is Ultrasonic Anemometer project based on AVR ATmega1284 microcontroller.
+This is Ultrasonic Anemometer project based on AVR [ATmega1284](http://www.atmel.com/devices/atmega1284.aspx) microcontroller.
 
 ## Principle of operation
 
@@ -32,6 +32,13 @@ where:
 * t - time of flight
 
 Velocities in previous equations can be substituted by above time formula:
-<div align="center"><img src="img/formulas/wind_sound_velocity_4.png" height="107"/></div>
+<div align="center"><img src="img/formulas/wind_sound_velocity_4.png" height="107"/></div>  
+Anemometer has only two ultrasonic transducers. Therefore, it can only measure wind speed in one direction (parallel to line containing both transducers). Measurement in more dimensions can be achievied by adding more transducers.
+<div align="center"><img src="img/outside_2.jpg" width="300"/></div>
+Device displays calculated wind speed and its direction on [HD44780 LCD](https://en.wikipedia.org/wiki/Hitachi_HD44780_LCD_controller) display. Under speed value there is a progress bar to next measured value. Unfortunately it takes quite a lot of time to perform all the signal processing calculations on this ATmega.  
+Red LED is lit while power is supplied to the device. Green LED is blinking while the device is working correctly.  
+Red button on the right performs calibration procedure (explained later).  
+On the left side of the device there is a socket for power supply.
+<div align="center"><img src="img/outside_3.jpg" height="150"/> <img src="img/outside_4.jpg" height="150"/></div>
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Ultrasonic Anemometer</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Karol Leszczyński</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.

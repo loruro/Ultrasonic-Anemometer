@@ -37,7 +37,7 @@ Anemometer has only two ultrasonic transducers. Therefore, it can only measure w
 <div align="center"><img src="img/outside_2.jpg" width="300"/></div>
 Device displays calculated wind speed and its direction on [HD44780 LCD](https://en.wikipedia.org/wiki/Hitachi_HD44780_LCD_controller) display. Under speed value there is a progress bar to next measured value. Unfortunately it takes quite a lot of time to perform all the signal processing calculations on this ATmega (about 46 seconds).  
 Red LED is lit while power is supplied to the device. Green LED is blinking while the device is working correctly.  
-Red button on the right performs calibration procedure. After pressing button for 2 seconds next set of samples acquired by transducers will be stored in EEPROM and used later for signal processing. This has to be done while there is no wind. Along with samples, temperature from DS1820 sensor is also acquired and stored. This calibration data will survive shutdown of the device because of storage in EEPROM.  
+Red button on the right performs calibration procedure. After pressing button for 2 seconds, [envelope](https://en.wikipedia.org/wiki/Envelope_%28waves%29) will be calculated of the next set of samples acquired by transducers. The result will be stored in EEPROM and used later for signal processing. This has to be done while there is no wind. Along with samples, temperature from DS1820 sensor is also acquired and stored. This calibration data will survive shutdown of the device because of storage in EEPROM.  
 On the left side of the device there is a socket for power supply.
 <div align="center"><img src="img/outside_3.jpg" height="150"/> <img src="img/outside_4.jpg" height="150"/></div>
 
@@ -68,7 +68,7 @@ And its Bode plot:
 <div align="center"><img src="img/charts/bode.png" width="300"/></div>
 Signal after filtering:
 <div align="center"><img src="img/measurements/05InAmp3.png" width="200"/></div>
-After all the operational amplifiers signal finally goes to ADS7822P analog-to-digital converter. It sends converted, digital signal to microcontroller through SPI interface. ATmega here is a master. This ADC has a resolution of 12 bits and max. frequency of 200 kHz. Because of clock dividers in ATmega and clock cycles needed to handle SPI, I managed to get sampling frequency of 157.9 kHz. [Nyquist–Shannon–Kotelnikov sampling theorem](https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem) states that the sampling frequency should be at least 80536 Hz, so it is fulfilled.  
+After all the operational amplifiers, signal finally goes to ADS7822P analog-to-digital converter. It sends converted digital signal to microcontroller through SPI interface. ATmega here is a master. This ADC has a resolution of 12 bits and max. frequency of 200 kHz. Because of clock dividers in ATmega and clock cycles needed to handle SPI, I managed to get sampling frequency of 157.9 kHz. [Nyquist–Shannon–Kotelnikov sampling theorem](https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem) states that the sampling frequency should be at least 80536 Hz, so it is fulfilled. Analog signal has maximum value of about 4 V, so to increase voltage resolution I attached voltage divider to VREF pin of ADC, which gives voltage of about 4.359 V. This results in voltage resolution of 1.064 mV.  
 Analog part of the device uses different ground than the rest of the device. It reduces noise derived from high frequency digital signals. Digital ground and analog ground are connected together at one point, close to the power supply.
 
 Electrical schematic and PCB layout were designed using [EAGLE](https://cadsoft.io/) application. Tracks on PCB were designed using EAGLE Autorouter. That's why it's so ugly :)  
@@ -77,6 +77,42 @@ Photos of interior:
 
 ## Signal processing
 
-For getting precise time of flight of ultrasonic impulse I used [Cross Correlation](https://en.wikipedia.org/wiki/Cross-correlation) method.
+After acquiring by microcontroller, digital samples look like this:
+<div align="center"><img src="img/charts/raw.png" width="300"/></div>
+Those samples should be analyzed without offset, so average value is calculated and subtracted from them:
+<div align="center"><img src="img/charts/mean_zero.png" width="300"/></div>
+For getting precise time of flight of ultrasonic impulse I decided to calculate envelope of the acquired signal and [cross correlate](https://en.wikipedia.org/wiki/Cross-correlation) it with the calibration signal stored in EEPROM. To get envelope of signal, a magnitude of its [analytic representation](https://en.wikipedia.org/wiki/Analytic_signal) can be calculated. To get analytic signal, [Hilbert transform](https://en.wikipedia.org/wiki/Hilbert_transform) has to be calculated first. I used the following discrete formula to acquire it:
+<div align="center"><img src="img/formulas/hilbert_1.png" height="65"/></div>
+where:
+* <div align="left"><img src="img/formulas/hilbert_2.png" height="68"/></div>
+* x - original signal
+* N - number of samples
+
+Analytic signal can now be calculated with the following formula:
+<div align="center"><img src="img/formulas/analytic.png" height="29"/></div>
+Result:
+<div align="center"><img src="img/charts/envelope.png" width="300"/></div>
+Now the envelope can be cross correlated with the envelope of calibration signal. I used following formula for discrete cross correlation:
+<div align="center"><img src="img/formulas/cross_correlation.png" height="65"/></div>
+
+Distance between the maximal value and Y axis should determine time of flight of ultrasonic signal:
+<div align="center"><img src="img/charts/envelope_correlation.png" width="300"/></div>
+I also tried calculating only the cross correlation of present and calibration signals, but results were far from being correct. I also tried calculating cross correlation first and then the envelope of it. Results were almost as good as the currently used method, but still they were worse.
+
+I observed that the top part of the calculated cross correlation looks similar to quadratic function. To increase resolution and extract more information from it I decided to use quadratic regression. 31 highest samples are used to approximate quadratic function using following formulas:
+<div align="center"><img src="img/formulas/regression_1.png" height="153"/></div>
+where:
+* x - function arguments
+* y - function value
+* ()² - average value
+
+Coefficients can now be calculated (coefficient C is not needed):
+<div align="center"><img src="img/formulas/regression_2.png" height="110"/></div>
+
+And finally maximum of the function can be calculated:
+<div align="center"><img src="img/formulas/regression_3.png" height="47"/></div>
+
+This maximum is used to calculate the time of flight. Here is comparison of signal and approximated quadratic function:
+<div align="center"><img src="img/charts/regression.png" width="300"/></div>
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Ultrasonic Anemometer</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Karol Leszczyński</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.

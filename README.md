@@ -84,7 +84,8 @@ Those samples should be analyzed without offset, so average value is calculated 
 For getting precise time of flight of ultrasonic impulse I decided to calculate envelope of the acquired signal and [cross correlate](https://en.wikipedia.org/wiki/Cross-correlation) it with the calibration signal stored in EEPROM. To get envelope of signal, a magnitude of its [analytic representation](https://en.wikipedia.org/wiki/Analytic_signal) can be calculated. To get analytic signal, [Hilbert transform](https://en.wikipedia.org/wiki/Hilbert_transform) has to be calculated first. I used the following discrete formula to acquire it:
 <div align="center"><img src="img/formulas/hilbert_1.png" height="65"/></div>
 where:
-* <div align="left"><img src="img/formulas/hilbert_2.png" height="68"/></div>
+<div align="left"><img src="img/formulas/hilbert_2.png" height="68"/></div>
+and
 * x - original signal
 * N - number of samples
 
@@ -104,7 +105,7 @@ I observed that the top part of the calculated cross correlation looks similar t
 where:
 * x - function arguments
 * y - function value
-* ()² - average value
+* ( ¯ ) - average value
 
 Coefficients can now be calculated (coefficient C is not needed):
 <div align="center"><img src="img/formulas/regression_2.png" height="110"/></div>
@@ -114,5 +115,85 @@ And finally maximum of the function can be calculated:
 
 This maximum is used to calculate the time of flight. Here is comparison of signal and approximated quadratic function:
 <div align="center"><img src="img/charts/regression.png" width="300"/></div>
+
+## Software
+
+Software for the ATmega1284 microcontroller was developed using Atmel Studio IDE with AVR8 GNU Toolchain. It contains avr-libc libraries and avr-gcc compiler. Optimization flag **_-Os_** was set for compilation. All used flags are below:
+```
+avr-gcc -x c -funsigned-char -funsigned-bitfields -DNDEBUG -DF_CPU=24000000UL -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -mmcu=atmega1284 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"
+```
+Fuse bits are configured as follows:
+
+| Fuse Low | Fuse High | Extended Fuse |
+| :------: |:---------:| :-----------: |
+|   0xF7   |   0xD1    |     0xFC      |
+Pretty online fuse calculator showing this configuration is [here](http://eleccelerator.com/fusecalc/fusecalc.php?chip=atmega1284p&LOW=F7&HIGH=D1&EXTENDED=FC&LOCKBIT=FF). Fuse Low is configured to allow clock source from 24 MHz quartz crystal. Fuse High, among other things, disables JTAG interface, so more pins can be used as GPIO. Extended Fuse enables Brown-out detection at level 4.3 V.
+
+One of the most important fragment of code is shown below:
+```C
+inline void getDataFromAdc(uint16_t *data) {
+  // Activating ADC.
+  SPI_SS_LOW;
+  // Starting transmission.
+  SPDR = 0x00;
+
+  // Waiting for end of transmission.
+  // NOP causes loop to check end of transmission flag at the most optimal time.
+  asm volatile("nop"::);
+  while(!(SPSR & _BV(SPIF)));
+
+  // Starting another transmission.
+  SPDR = 0x00;
+  // Saving byte from previous transmission.
+  *((uint8_t*)data + 1) = SPDR;
+
+  // Waiting for end of transmission. This time three NOP's were needed.
+  asm volatile(
+    "nop\n\t"
+    "nop\n\t"
+    "nop\n\t"::
+  );
+  while(!(SPSR & _BV(SPIF)));
+
+  // Saving byte from transmission.
+  *((uint8_t*)data + 0) = SPDR;
+  // Deactivating ADC.
+  SPI_SS_HIGH;
+}
+```
+This function is responsible for acquiring samples from ADC. Execution time of it is significant, because sampling frequency depends on it. <i>SPI_SS_LOW</i> macro drives SS line low on SPI interface. It enables ADC. Afterwards, writing 0 to SPDR register begins transmission. Microcontroller is transmitting this 0 over MOSI line (which is not even connected to ADC), but at the same time, it receives data byte over MISO line. <i>while(!(SPSR & _BV(SPIF)))</i> waits for the end of transmission. Because checking for SPIF flag in loop takes a few clock cycles, adding <i>asm volatile("nop"::)</i> ensures that the flag is checked right after end of transmission. This solution was found by analyzing assembly code during simulator debugging. Right after that, another transmission starts. Afterwards, previous byte is saved in variable. SPDR register for transmitted byte is different than SPDR for received byte, so this sequence was used just to save some clock cycles. SPIF is checked again for end of transmission, but now three NOPs were needed. Later, new byte is saved in variable and <i>SPI_SS_HIGH</i> drives SS line high and disables ADC. Restarting ADC is needed between every sample.
+
+Generated assembly from above code is shown below:
+```assembly
+cbi    0x05, 4
+out    0x2e, r1
+nop
+in     r0, 0x2d
+sbrs   r0, 7
+rjmp   .-6
+out    0x2e, r1
+in     r18, 0x2e
+movw   r30, r24
+subi   r30, 0xA7
+sbci   r31, 0xFE
+std    Z+1, r18
+nop
+nop
+nop
+in     r0, 0x2d
+sbrs   r0, 7
+rjmp   .-6
+in     r18, 0x2e
+st     Z, r18
+sbi    0x05, 4
+adiw   r24, 0x02
+cpi    r24, 0xC0
+ldi    r18, 0x03
+cpc    r25, r18
+brne   .-52
+```
+Execution of this code takes exactly 152 clock cycles. For 24 MHz clock, it gives 6333 ns. It is equivalent to sampling frequency of 157.9 MHz.
+
+In this program there are no floating point numbers, because ATmega microcontrollers don't have hardware support for them, which would result in very long computation time and large memory consumption. Trigonometric functions needed for calculations were implemented as lookup tables.
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Ultrasonic Anemometer</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Karol Leszczyński</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.

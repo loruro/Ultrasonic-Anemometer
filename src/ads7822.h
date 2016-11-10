@@ -64,8 +64,9 @@ inline void getDataFromAdc(uint16_t *data) {
   // Saving byte from previous transmission.
   *((uint8_t*)data + 1) = SPDR;
 
-  // Waiting for end of transmission. This time two NOP's were needed.
+  // Waiting for end of transmission. This time three NOP's were needed.
   asm volatile(
+    "nop\n\t"
     "nop\n\t"
     "nop\n\t"::
   );

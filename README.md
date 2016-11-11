@@ -116,6 +116,9 @@ And finally maximum of the function can be calculated:
 This maximum is used to calculate the time of flight. Here is comparison of signal and approximated quadratic function:
 <div align="center"><img src="img/charts/regression.png" width="300"/></div>
 
+Distance between the maximal value and Y axis multiplied by 6333 ns results only in signal time of flight difference between conditions with wind and without wind. To get total time of fligh there has to be added time of flight during windless conditions. This time is calculated using temperature acquired during calibration by using formula from the beggining of the article. Distance between transducers also has to be known. It's 27 cm. Any later temperature changes should not affect the final result.  
+Knowing the total signal time of flight, final wind speed value is calculated.
+
 ## Software
 
 Software for the ATmega1284 microcontroller was developed using Atmel Studio IDE with AVR8 GNU Toolchain. It contains avr-libc libraries and avr-gcc compiler. Optimization flag **_-Os_** was set for compilation. All used flags are below:
@@ -195,5 +198,11 @@ brne   .-52
 Execution of this code takes exactly 152 clock cycles. For 24 MHz clock, it gives 6333 ns. It is equivalent to sampling frequency of 157.9 MHz.
 
 In this program there are no floating point numbers, because ATmega microcontrollers don't have hardware support for them, which would result in very long computation time and large memory consumption. Trigonometric functions needed for calculations were implemented as lookup tables.
+
+## Conclusion
+
+I tested the device with typical household fan. Result of the measurements seem to be OK. Unfortunately I don't have access to any professional hardware, which would verify it.  
+46 seconds needed for calculating wind speed is a bit too long time. More powerful microcontroller should have been used or a different signal processing method. ATmega microcontrollers are very slow comparing to modern ones.  
+Despite it, while creating this device I learned many new things about electronics, digital signal processing and programming embedded systems in C. Also I Learned how does ultrasonic anemometer works.
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Ultrasonic Anemometer</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Karol Leszczyński</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.

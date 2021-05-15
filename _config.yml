@@ -3,9 +3,6 @@ description:
 google_analytics: 
 show_downloads: true
 theme: jekyll-theme-architect
-highlighter: rouge
-kramdown:
-  syntax_highlighter: rouge
 
 gems:
   - jekyll-mentions

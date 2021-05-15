@@ -133,6 +133,7 @@ Fuse bits are configured as follows:
 Pretty online fuse calculator showing this configuration is [here](http://eleccelerator.com/fusecalc/fusecalc.php?chip=atmega1284p&LOW=F7&HIGH=D1&EXTENDED=FC&LOCKBIT=FF). Fuse Low is configured to allow clock source from 24 MHz quartz crystal. Fuse High, among other things, disables JTAG interface, so more pins can be used as GPIO. Extended Fuse enables Brown-out detection at level 4.3 V.
 
 One of the most important fragment of code is shown below:
+
 ```C
 inline void getDataFromAdc(uint16_t *data) {
   // Activating ADC.
@@ -164,9 +165,11 @@ inline void getDataFromAdc(uint16_t *data) {
   SPI_SS_HIGH;
 }
 ```
+
 This function is responsible for acquiring samples from ADC. Execution time of it is significant, because sampling frequency depends on it. <i>SPI_SS_LOW</i> macro drives SS line low on SPI interface. It enables ADC. Afterwards, writing 0 to SPDR register begins transmission. Microcontroller is transmitting this 0 over MOSI line (which is not even connected to ADC), but at the same time, it receives data byte over MISO line. <i>while(!(SPSR & _BV(SPIF)))</i> waits for the end of transmission. Because checking for SPIF flag in loop takes a few clock cycles, adding <i>asm volatile("nop"::)</i> ensures that the flag is checked right after end of transmission. This solution was found by analyzing assembly code during simulator debugging. Right after that, another transmission starts. Afterwards, previous byte is saved in variable. SPDR register for transmitted byte is different than SPDR for received byte, so this sequence was used just to save some clock cycles. SPIF is checked again for end of transmission, but now three NOPs were needed. Later, new byte is saved in variable and <i>SPI_SS_HIGH</i> drives SS line high and disables ADC. Restarting ADC is needed between every sample.
 
 Generated assembly from above code is shown below:
+
 ```assembly
 cbi    0x05, 4
 out    0x2e, r1
@@ -195,6 +198,7 @@ ldi    r18, 0x03
 cpc    r25, r18
 brne   .-52
 ```
+
 Execution of this code takes exactly 152 clock cycles. For 24 MHz clock, it gives 6333 ns. It is equivalent to sampling frequency of 157.9 MHz.
 
 In this program there are no floating point numbers, because ATmega microcontrollers don't have hardware support for them, which would result in very long computation time and large memory consumption. Trigonometric functions needed for calculations were implemented as lookup tables.

@@ -134,7 +134,7 @@ Pretty online fuse calculator showing this configuration is [here](http://elecce
 
 One of the most important fragment of code is shown below:
 
-```C
+```js
 inline void getDataFromAdc(uint16_t *data) {
   // Activating ADC.
   SPI_SS_LOW;

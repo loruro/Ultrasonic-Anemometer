@@ -1,6 +1,6 @@
 <a href="https://loruro.github.io/"><sub>⟵ Back</sub></a>
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/outside_1.jpg" width="480"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/outside_1.jpg" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/outside_1.jpg" width="480"/></a></div>
 
 This is Ultrasonic Anemometer project based on AVR ATmega microcontroller.
 
@@ -8,7 +8,7 @@ This is Ultrasonic Anemometer project based on AVR ATmega microcontroller.
 
 Device measures wind velocity using ultrasounds. Two ultrasonic transducers installed on the end of both pipes send 40 kHz ultrasound signal between each other. Normally the velocity of this signal is the same for both directions. It is equal to the speed of sound, which depends mainly on the air temperature. For dry air and 1000 hPa pressure it can be calculated from:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/speed_of_sound.png" height="28"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/speed_of_sound.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/speed_of_sound.png" height="28"/></a></div>
 
 where:
 * vₚ - speed of sound [m/s]
@@ -18,7 +18,7 @@ At 20 °C it is 343,96 m/s.
 
 If there is a wind, it alters velocity of sound wave propagating in direction parallel to the wind:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/wind_sound_velocity_1.png" height="56"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/wind_sound_velocity_1.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/wind_sound_velocity_1.png" height="56"/></a></div>
 
 where:
 * v₁₂ - velocity of sound wave between point 1 and point 2
@@ -28,12 +28,12 @@ where:
 
 Above equations can be transformed into:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/wind_sound_velocity_2.png" height="100"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/wind_sound_velocity_2.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/wind_sound_velocity_2.png" height="100"/></a></div>
 
 The velocity of sound wave can be acquired by measuring time of flight of this wave between ultrasonic transducers. This is what this device does. First transducer emits ultrasonic impulse and second one receives it. Time between those events is measured and later the situation is reversed. Second transducers emits and first one receives.  
 Knowing distance between those transducers, velocity of sound can be finally calculated.
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/wind_sound_velocity_3.png" height="49"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/wind_sound_velocity_3.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/wind_sound_velocity_3.png" height="49"/></a></div>
 
 where:
 * d - distance between transducers
@@ -41,22 +41,22 @@ where:
 
 Velocities in previous equations can be substituted by above time formula:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/wind_sound_velocity_4.png" height="107"/></div>  
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/wind_sound_velocity_4.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/wind_sound_velocity_4.png" height="107"/></a></div>  
 
 Anemometer has only two ultrasonic transducers. Therefore, it can only measure wind speed in one direction (parallel to line containing both transducers). Measurement in more dimensions can be achievied by adding more transducers.
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/outside_2.jpg" width="300"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/outside_2.jpg" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/outside_2.jpg" width="300"/></a></div>
 
 Device displays calculated wind speed and its direction on [HD44780 LCD](https://en.wikipedia.org/wiki/Hitachi_HD44780_LCD_controller) display. Under speed value there is a progress bar to next measured value. Unfortunately it takes quite a lot of time to perform all the signal processing calculations on this ATmega (about 46 seconds).  
 Red LED is lit while power is supplied to the device. Green LED is blinking while the device is working correctly.  
 Red button on the right performs calibration procedure. After pressing button for 2 seconds, [envelope](https://en.wikipedia.org/wiki/Envelope_%28waves%29) will be calculated of the next set of samples acquired by transducers. The result will be stored in EEPROM and used later for signal processing. This has to be done while there is no wind. Along with samples, temperature from DS1820 sensor is also acquired and stored. This calibration data will survive shutdown of the device because of storage in EEPROM.  
 On the left side of the device there is a socket for power supply.
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/outside_3.jpg" height="150"/> <img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/outside_4.jpg" height="150"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/outside_3.jpg" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/outside_3.jpg" height="150"/></a> <a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/outside_4.jpg" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/outside_4.jpg" height="150"/></a></div>
 
 ## Hardware
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/schematic.png" height="200"/> <img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/pcb.png" height="200"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/schematic.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/schematic.png" height="200"/></a> <a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/pcb.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/pcb.png" height="200"/></a></div>
 
 Main part of the device is the AVR [ATmega1284](http://www.atmel.com/devices/atmega1284.aspx) microcontroller. It is slightly overclocked for a better performance. I used 24 MHz quartz crystal (official max. frequency is 20 MHz). Controller is programmed with ISP interface. I used simple and cheap [USBasp](http://www.fischl.de/usbasp/) programmer for it.  
 Calibration button was connected together with resistor, capacitor and diode which do hardware [debouncing](https://en.wikipedia.org/wiki/Switch#Contact_bounce).  
@@ -65,39 +65,39 @@ HD44780 display is connected in 4-bit mode and busy bit reading.
 DS1820 temperature sensor uses 1-Wire interface, but has option for powering it via additional VDD pin. I used this option for better stability.  
 Analog part of the device needs more explanation. Some of the signals here were measured by an oscilloscope. Microcontroller sends square wave through GENERATOR_OUT line to ultrasonic transducers.
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/measurements/01cpuOut.png" width="200"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/measurements/01cpuOut.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/measurements/01cpuOut.png" width="200"/></a></div>
 
 Multiplexer 74HC4052 directs it to either left or right transducer. Multiplexer is controlled by SWITCH_CHANNEL from ATmega. Transducers used in project are narrowband and designed for 40 kHz signal. Experimentally I found out that 40268 Hz signal gives the best amplitude. Transducers are connected with board by shielded cable. While signal from microcontroller is directed to one of them, signal from the other one is directed by multiplexer to amplifiers. Here is the signal before them:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/measurements/02InNoAmp.png" width="200"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/measurements/02InNoAmp.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/measurements/02InNoAmp.png" width="200"/></a></div>
 
 First is an [inverting amplifier](https://en.wikipedia.org/wiki/Operational_amplifier_applications#Inverting_amplifier):
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/amplifier_1.png" height="53"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/amplifier_1.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/amplifier_1.png" height="53"/></a></div>
 
 Amplified signal:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/measurements/03InAmp1.png" width="200"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/measurements/03InAmp1.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/measurements/03InAmp1.png" width="200"/></a></div>
 
 Later signal goes to [summing amplifier](https://en.wikipedia.org/wiki/Operational_amplifier_applications#Summing_amplifier), which again amplifies and adds offset to it. Entire signal has to be voltage positive because ADC used in the device cannot work with negative voltage.
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/amplifier_2.png" height="51"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/amplifier_2.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/amplifier_2.png" height="51"/></a></div>
 
 Amplified signal:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/measurements/04InAmp2.png" width="200"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/measurements/04InAmp2.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/measurements/04InAmp2.png" width="200"/></a></div>
 
 For final step I used [integrator](https://en.wikipedia.org/wiki/Operational_amplifier_applications#Inverting_integrator), which acts as low-pass filter. Any frequencies which are higher than our ultrasonic signal should be filtered out. Transfer function of the filter:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/amplifier_3.png" height="51"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/amplifier_3.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/amplifier_3.png" height="51"/></a></div>
 
 And its Bode plot:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/charts/bode.png" width="300"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/charts/bode.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/charts/bode.png" width="300"/></a></div>
 
 Signal after filtering
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/measurements/05InAmp3.png" width="200"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/measurements/05InAmp3.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/measurements/05InAmp3.png" width="200"/></a></div>
 
 After all the operational amplifiers, signal finally goes to ADS7822P analog-to-digital converter. It sends converted digital signal to microcontroller through SPI interface. ATmega here is a master. This ADC has a resolution of 12 bits and max. frequency of 200 kHz. Because of clock dividers in ATmega and clock cycles needed to handle SPI, I managed to get sampling frequency of 157.9 kHz. [Nyquist–Shannon–Kotelnikov sampling theorem](https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem) states that the sampling frequency should be at least 80536 Hz, so it is fulfilled. Analog signal has maximum value of about 4 V, so to increase voltage resolution I attached voltage divider to VREF pin of ADC, which gives voltage of about 4.359 V. This results in voltage resolution of 1.064 mV.  
 Analog part of the device uses different ground than the rest of the device. It reduces noise derived from high frequency digital signals. Digital ground and analog ground are connected together at one point, close to the power supply.
@@ -105,25 +105,25 @@ Analog part of the device uses different ground than the rest of the device. It 
 Electrical schematic and PCB layout were designed using [EAGLE](https://cadsoft.io/) application. Tracks on PCB were designed using EAGLE Autorouter. That's why it's so ugly :)  
 Photos of interior:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/inside_1.jpg" height="150"/> <img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/inside_2.jpg" height="150"/> <img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/inside_3.jpg" height="150"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/inside_1.jpg" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/inside_1.jpg" height="150"/></a> <a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/inside_2.jpg" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/inside_2.jpg" height="150"/></a> <a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/inside_3.jpg" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/inside_3.jpg" height="150"/></a></div>
 
 ## Signal processing
 
 After acquiring by microcontroller, digital samples look like this:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/charts/raw.png" width="300"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/charts/raw.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/charts/raw.png" width="300"/></a></div>
 
 Those samples should be analyzed without offset, so average value is calculated and subtracted from them:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/charts/mean_zero.png" width="300"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/charts/mean_zero.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/charts/mean_zero.png" width="300"/></a></div>
 
 For getting precise time of flight of ultrasonic impulse I decided to calculate envelope of the acquired signal and [cross correlate](https://en.wikipedia.org/wiki/Cross-correlation) it with the calibration signal stored in EEPROM. To get envelope of signal, a magnitude of its [analytic representation](https://en.wikipedia.org/wiki/Analytic_signal) can be calculated. To get analytic signal, [Hilbert transform](https://en.wikipedia.org/wiki/Hilbert_transform) has to be calculated first. I used the following discrete formula to acquire it:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/hilbert_1.png" height="65"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/hilbert_1.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/hilbert_1.png" height="65"/></a></div>
 
 where:
 
-<div align="left"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/hilbert_2.png" height="68"/></div>
+<div align="left"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/hilbert_2.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/hilbert_2.png" height="68"/></a></div>
 
 and
 * x - original signal
@@ -131,25 +131,25 @@ and
 
 Analytic signal can now be calculated with the following formula:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/analytic.png" height="29"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/analytic.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/analytic.png" height="29"/></a></div>
 
 Result:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/charts/envelope.png" width="300"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/charts/envelope.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/charts/envelope.png" width="300"/></a></div>
 
 Now the envelope can be cross correlated with the envelope of calibration signal. I used following formula for discrete cross correlation:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/cross_correlation.png" height="65"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/cross_correlation.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/cross_correlation.png" height="65"/></a></div>
 
 Distance between the maximal value and Y axis should determine time of flight of ultrasonic signal:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/charts/envelope_correlation.png" width="300"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/charts/envelope_correlation.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/charts/envelope_correlation.png" width="300"/></a></div>
 
 I also tried calculating only the cross correlation of present and calibration signals, but results were far from being correct. I also tried calculating cross correlation first and then the envelope of it. Results were almost as good as the currently used method, but still they were worse.
 
 I observed that the top part of the calculated cross correlation looks similar to quadratic function. To increase resolution and extract more information from it I decided to use quadratic regression. 31 highest samples are used to approximate quadratic function using following formulas:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/regression_1.png" height="153"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/regression_1.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/regression_1.png" height="153"/></a></div>
 
 where:
 * x - function arguments
@@ -158,15 +158,15 @@ where:
 
 Coefficients can now be calculated (coefficient C is not needed):
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/regression_2.png" height="110"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/regression_2.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/regression_2.png" height="110"/></a></div>
 
 And finally maximum of the function can be calculated:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/regression_3.png" height="47"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/regression_3.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/formulas/regression_3.png" height="47"/></a></div>
 
 This maximum is used to calculate the time of flight. Here is comparison of signal and approximated quadratic function:
 
-<div align="center"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/charts/regression.png" width="300"/></div>
+<div align="center"><a href="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/charts/regression.png" target="_blank"><img src="https://raw.githubusercontent.com/loruro/Ultrasonic_Anemometer/master/img/charts/regression.png" width="300"/></a></div>
 
 Distance between the maximal value and Y axis multiplied by 6333 ns results only in signal time of flight difference between conditions with wind and without wind. To get total time of fligh there has to be added time of flight during windless conditions. This time is calculated using temperature acquired during calibration by using formula from the beggining of the article. Distance between transducers also has to be known. It's 27 cm. Any later temperature changes should not affect the final result.  
 Knowing the total signal time of flight, final wind speed value is calculated.
